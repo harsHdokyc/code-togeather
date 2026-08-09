@@ -283,6 +283,49 @@ io.on("connection", (socket) => {
 			snapshot,
 		})
 	})
+
+	// WebRTC signaling for video calls
+	socket.on(SocketEvent.VIDEO_CALL_OFFER, ({ offer, targetSocketId }) => {
+		io.to(targetSocketId).emit(SocketEvent.VIDEO_CALL_OFFER, { offer, callerSocketId: socket.id })
+	})
+
+	socket.on(SocketEvent.VIDEO_CALL_ANSWER, ({ answer, targetSocketId }) => {
+		io.to(targetSocketId).emit(SocketEvent.VIDEO_CALL_ANSWER, { answer })
+	})
+
+	socket.on(SocketEvent.VIDEO_CALL_ICE_CANDIDATE, ({ candidate, targetSocketId }) => {
+		io.to(targetSocketId).emit(SocketEvent.VIDEO_CALL_ICE_CANDIDATE, { candidate })
+	})
+
+	socket.on(SocketEvent.VIDEO_CALL_END, ({ targetSocketId }) => {
+		io.to(targetSocketId).emit(SocketEvent.VIDEO_CALL_END)
+	})
+
+	// Broadcast call to all room members
+	socket.on(SocketEvent.VIDEO_CALL_BROADCAST, () => {
+		const roomId = getRoomId(socket.id)
+		if (!roomId) return
+		const users = getUsersInRoom(roomId)
+		const caller = getUserBySocketId(socket.id)
+		if (!caller) return
+		
+		// Send incoming call to all other users in room
+		users.forEach(user => {
+			if (user.socketId !== socket.id) {
+				io.to(user.socketId).emit(SocketEvent.VIDEO_CALL_INCOMING, { caller })
+			}
+		})
+	})
+
+	// Handle call acceptance
+	socket.on(SocketEvent.VIDEO_CALL_ACCEPT, ({ callerSocketId }) => {
+		io.to(callerSocketId).emit(SocketEvent.VIDEO_CALL_ACCEPT, { acceptorSocketId: socket.id })
+	})
+
+	// Handle call rejection
+	socket.on(SocketEvent.VIDEO_CALL_REJECT, ({ callerSocketId }) => {
+		io.to(callerSocketId).emit(SocketEvent.VIDEO_CALL_REJECT, { rejectorSocketId: socket.id })
+	})
 })
 
 const PORT = process.env.PORT || 3000

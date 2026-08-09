@@ -61,6 +61,10 @@ function Sidebar() {
                     icon={viewIcons[VIEWS.CHATS]}
                 />
                 <SidebarButton
+                    viewName={VIEWS.VIDEO_CALL}
+                    icon={viewIcons[VIEWS.VIDEO_CALL]}
+                />
+                <SidebarButton
                     viewName={VIEWS.COPILOT}
                     icon={viewIcons[VIEWS.COPILOT]}
                 />

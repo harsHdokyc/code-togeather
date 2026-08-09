@@ -27,6 +27,16 @@ enum SocketEvent {
     REQUEST_DRAWING = "request-drawing",
     SYNC_DRAWING = "sync-drawing",
     DRAWING_UPDATE = "drawing-update",
+    // WebRTC signaling events for video calls
+    VIDEO_CALL_OFFER = "video-call-offer",
+    VIDEO_CALL_ANSWER = "video-call-answer",
+    VIDEO_CALL_ICE_CANDIDATE = "video-call-ice-candidate",
+    VIDEO_CALL_END = "video-call-end",
+    // Broadcast call events
+    VIDEO_CALL_BROADCAST = "video-call-broadcast",
+    VIDEO_CALL_ACCEPT = "video-call-accept",
+    VIDEO_CALL_REJECT = "video-call-reject",
+    VIDEO_CALL_INCOMING = "video-call-incoming",
 }
 
 interface SocketContext {
