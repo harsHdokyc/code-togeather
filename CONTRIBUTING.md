@@ -1,8 +1,8 @@
-# Contributing to Code Sync
+# Contributing to Code Togeather
 
-We welcome contributions to the Code Sync project! Whether you're reporting a bug, suggesting a new feature, or fixing a typo, your input is valuable to us. Here are some guidelines to help you get started:
+We welcome contributions to the Code Togeather project! Whether you're reporting a bug, suggesting a new feature, or fixing a typo, your input is valuable to us. Here are some guidelines to help you get started:
 
-Thank you for considering contributing to code sync! Follow the steps below to contribute:
+Thank you for considering contributing to code togeather! Follow the steps below to contribute:
 
 ## Getting Started
 
@@ -10,7 +10,7 @@ Thank you for considering contributing to code sync! Follow the steps below to c
 
 2. **Clone the Repository:** Clone your forked repository to your local machine:
    ```bash
-   git clone https://github.com/<your_username>/Code-Sync.git
+   git clone https://github.com/<your_username>/code-togeather.git
    ```
 
 ## Making Changes
@@ -38,7 +38,7 @@ Thank you for considering contributing to code sync! Follow the steps below to c
 
 ## Reporting Bugs
 
-If you find a bug while using Code Sync, please report it by opening an issue on Github. Please include the following information:
+If you find a bug while using Code Togeather, please report it by opening an issue on Github. Please include the following information:
 
 * Description of the bug
 * Steps to reproduce the bug
@@ -56,7 +56,7 @@ If you notice a spelling mistake or grammatical error in the project's documenta
 
 ## Thank You!
 
-Thank you for contributing to Code Sync! Your efforts make a difference.
+Thank you for contributing to Code Togeather! Your efforts make a difference.
 If you have questions or need assistance, contact the project maintainers.
 
 Happy contributing!
