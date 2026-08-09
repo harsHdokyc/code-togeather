@@ -1,4 +1,4 @@
-import axiosInstance from "@/api/pistonApi"
+import axiosInstance from "@/api/sandboxApi"
 import { Language, RunContext as RunContextType } from "@/types/run"
 import langMap from "lang-map"
 import {
@@ -30,16 +30,19 @@ const RunCodeContextProvider = ({ children }: { children: ReactNode }) => {
     const [isRunning, setIsRunning] = useState<boolean>(false)
     const [supportedLanguages, setSupportedLanguages] = useState<Language[]>([])
     const [selectedLanguage, setSelectedLanguage] = useState<Language>({
-        language: "",
+        id: "",
+        name: "",
         version: "",
         aliases: [],
+        language: "",
     })
 
     useEffect(() => {
         const fetchSupportedLanguages = async () => {
             try {
-                const languages = await axiosInstance.get("/runtimes")
-                setSupportedLanguages(languages.data)
+                const response = await axiosInstance.get("/languages")
+                const languages = response.data?.languages && Array.isArray(response.data.languages) ? response.data.languages : []
+                setSupportedLanguages(languages)
             } catch (error: any) {
                 toast.error("Failed to fetch supported languages")
                 if (error?.response?.data) console.error(error?.response?.data)
@@ -51,24 +54,64 @@ const RunCodeContextProvider = ({ children }: { children: ReactNode }) => {
 
     // Set the selected language based on the file extension
     useEffect(() => {
-        if (supportedLanguages.length === 0 || !activeFile?.name) return
+        if (!Array.isArray(supportedLanguages) || supportedLanguages.length === 0 || !activeFile?.name) return
 
         const extension = activeFile.name.split(".").pop()
-        if (extension) {
-            const languageName = langMap.languages(extension)
+        if (!extension) {
+            setSelectedLanguage({ id: "", name: "", version: "", aliases: [], language: "" })
+            return
+        }
+
+        // Direct extension to language mapping for SandboxAPI (using id field)
+        const extensionToLanguage: Record<string, string> = {
+            'js': 'javascript',
+            'ts': 'typescript',
+            'py': 'python3',
+            'java': 'java',
+            'c': 'c',
+            'cpp': 'cpp',
+            'cs': 'csharp',
+            'go': 'go',
+            'rs': 'rust',
+            'rb': 'ruby',
+            'php': 'php',
+            'swift': 'swift',
+            'kt': 'kotlin',
+            'sh': 'bash',
+            'html': 'html',
+            'css': 'css',
+            'json': 'json',
+            'xml': 'xml',
+            'sql': 'sql',
+            'r': 'r',
+            'scala': 'scala',
+            'lua': 'lua',
+            'dart': 'dart',
+            'elixir': 'elixir',
+            'haskell': 'haskell',
+        }
+
+        const targetLanguage = extensionToLanguage[extension.toLowerCase()]
+        
+        if (targetLanguage) {
             const language = supportedLanguages.find(
-                (lang) =>
-                    lang.aliases.includes(extension) ||
-                    languageName.includes(lang.language.toLowerCase()),
+                (lang) => lang.id?.toLowerCase() === targetLanguage.toLowerCase()
             )
             if (language) setSelectedLanguage(language)
-        } else setSelectedLanguage({ language: "", version: "", aliases: [] })
+        } else {
+            // Fallback to langMap
+            const languageName = langMap.languages(extension)
+            const language = supportedLanguages.find(
+                (lang) => languageName?.includes(lang.name?.toLowerCase())
+            )
+            if (language) setSelectedLanguage(language)
+        }
     }, [activeFile?.name, supportedLanguages])
 
     const runCode = async () => {
         try {
-            if (!selectedLanguage) {
-                return toast.error("Please select a language to run the code")
+            if (!selectedLanguage || !selectedLanguage.id) {
+                return toast.error("Please select a valid language to run the code")
             } else if (!activeFile) {
                 return toast.error("Please open a file to run the code")
             } else {
@@ -76,24 +119,24 @@ const RunCodeContextProvider = ({ children }: { children: ReactNode }) => {
             }
 
             setIsRunning(true)
-            const { language, version } = selectedLanguage
+            const { id, version } = selectedLanguage
 
             const response = await axiosInstance.post("/execute", {
-                language,
+                language: id,
                 version,
-                files: [{ name: activeFile.name, content: activeFile.content }],
+                code: activeFile.content,
                 stdin: input,
             })
-            if (response.data.run.stderr) {
-                setOutput(response.data.run.stderr)
+            // SandboxAPI response format: { stdout: string, stderr: string, exitCode: number }
+            if (response.data.stderr) {
+                setOutput(response.data.stderr)
             } else {
-                setOutput(response.data.run.stdout)
+                setOutput(response.data.stdout)
             }
             setIsRunning(false)
             toast.dismiss()
         } catch (error: any) {
-            console.error(error.response.data)
-            console.error(error.response.data.error)
+            console.error("API Error:", error.response?.data)
             setIsRunning(false)
             toast.dismiss()
             toast.error("Failed to run the code")
@@ -106,9 +149,7 @@ const RunCodeContextProvider = ({ children }: { children: ReactNode }) => {
                 setInput,
                 output,
                 isRunning,
-                supportedLanguages,
                 selectedLanguage,
-                setSelectedLanguage,
                 runCode,
             }}
         >

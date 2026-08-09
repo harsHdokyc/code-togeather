@@ -64,7 +64,8 @@ You can view the live preview of the project [here](https://code-sync-live.verce
 
    ```bash
    VITE_BACKEND_URL=<your_server_url>
-   VITE_PISTON_API_URL=<your_piston_instance_api_url>
+   VITE_SANDBOX_API_URL=https://sandboxapi.p.rapidapi.com/v1
+   VITE_SANDBOX_API_KEY=<your_rapidapi_key>
    ```
 
    Backend:
@@ -136,10 +137,10 @@ You can view the live preview of the project [here](https://code-sync-live.verce
 
 Special thanks to:
 
-- EMKC for providing the Piston API:
+- SandboxAPI for providing code execution API:
 
-  - [Piston Repository](https://github.com/engineer-man/piston)
-  - [Piston Docs](https://piston.readthedocs.io/en/latest/api-v2/)
+  - [SandboxAPI Documentation](https://sandboxapi.dev/)
+  - [RapidAPI SandboxAPI](https://rapidapi.com/sandboxapidev/api/sandboxapi)
 
 - Tldraw contributors:
   - [Tldraw Repository](https://github.com/tldraw/tldraw)
