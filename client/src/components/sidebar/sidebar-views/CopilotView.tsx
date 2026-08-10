@@ -122,7 +122,7 @@ function CopilotView() {
                                     style={dracula}
                                     language={language}
                                     PreTag="pre"
-                                    className="!m-0 !h-full !rounded-lg !bg-gray-900 !p-2"
+                                    className="!m-0 !h-full !rounded-lg !bg-dark !p-2"
                                 >
                                     {String(children).replace(/\n$/, "")}
                                 </SyntaxHighlighter>

@@ -84,7 +84,7 @@ function Sidebar() {
                 {/* Button to change activity state coding or drawing */}
                 <div className="flex h-fit items-center justify-center">
                     <button
-                        className="justify-cente flex items-center  rounded p-1.5 transition-colors duration-200 ease-in-out hover:bg-[#3D404A]"
+                        className="justify-cente flex items-center  rounded p-1.5 transition-colors duration-200 ease-in-out hover:bg-darkHover"
                         onClick={changeState}
                         onMouseEnter={() => setShowTooltip(true)}
                         data-tooltip-id="activity-state-tooltip"

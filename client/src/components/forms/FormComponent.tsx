@@ -96,7 +96,7 @@ const FormComponent = () => {
                     type="text"
                     name="roomId"
                     placeholder="Room Id"
-                    className="w-full rounded-md border border-gray-500 bg-darkHover px-3 py-3 focus:outline-none"
+                    className="w-full rounded-md border border-darkHover bg-darkHover px-3 py-3 focus:outline-none"
                     onChange={handleInputChanges}
                     value={currentUser.roomId}
                 />
@@ -104,7 +104,7 @@ const FormComponent = () => {
                     type="text"
                     name="username"
                     placeholder="Username"
-                    className="w-full rounded-md border border-gray-500 bg-darkHover px-3 py-3 focus:outline-none"
+                    className="w-full rounded-md border border-darkHover bg-darkHover px-3 py-3 focus:outline-none"
                     onChange={handleInputChanges}
                     value={currentUser.username}
                     ref={usernameRef}

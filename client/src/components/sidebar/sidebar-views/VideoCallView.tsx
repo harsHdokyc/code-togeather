@@ -56,11 +56,11 @@ function VideoCallView() {
         return (
             <div className="flex h-full flex-col items-center justify-center gap-4 p-4 text-white">
                 <h2 className="text-xl font-bold">Incoming Call</h2>
-                <p className="text-gray-400">{incomingCall.caller.username} is calling...</p>
+                <p className="text-textMuted">{incomingCall.caller.username} is calling...</p>
                 <div className="flex gap-4">
                     <button
                         onClick={acceptCall}
-                        className="rounded-lg bg-green-500 px-6 py-3 font-bold text-white hover:bg-green-600"
+                        className="rounded-lg bg-primary px-6 py-3 font-bold text-black hover:bg-primary/90"
                     >
                         Accept
                     </button>
@@ -79,7 +79,7 @@ function VideoCallView() {
         return (
             <div className="flex h-full flex-col items-center justify-center gap-4 p-4 text-white">
                 <h2 className="text-xl font-bold">Video Call</h2>
-                <p className="text-gray-400">Start a video call with room participants</p>
+                <p className="text-textMuted">Start a video call with room participants</p>
                 <button
                     onClick={handleStartCall}
                     className="rounded-lg bg-primary px-6 py-3 font-bold text-black hover:bg-primary/90"
@@ -150,13 +150,13 @@ function VideoCallView() {
                 <div className="flex items-center justify-around border-t border-darkHover px-4 py-3">
                     <button
                         onClick={toggleMute}
-                        className={`rounded-full p-3 ${isMuted ? 'bg-red-500' : 'bg-gray-600'} hover:opacity-80`}
+                        className={`rounded-full p-3 ${isMuted ? 'bg-red-500' : 'bg-darkHover'} hover:opacity-80`}
                     >
                         {isMuted ? <LuMicOff size={20} color="white" /> : <LuMic size={20} color="white" />}
                     </button>
                     <button
                         onClick={toggleCamera}
-                        className={`rounded-full p-3 ${isCameraOff ? 'bg-red-500' : 'bg-gray-600'} hover:opacity-80`}
+                        className={`rounded-full p-3 ${isCameraOff ? 'bg-red-500' : 'bg-darkHover'} hover:opacity-80`}
                     >
                         {isCameraOff ? <LuVideoOff size={20} color="white" /> : <LuVideo size={20} color="white" />}
                     </button>

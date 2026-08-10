@@ -32,7 +32,7 @@ const User = ({ user }: { user: RemoteUser }) => {
             <div
                 className={`absolute right-5 top-0 h-3 w-3 rounded-full ${
                     status === USER_CONNECTION_STATUS.ONLINE
-                        ? "bg-green-500"
+                        ? "bg-primary"
                         : "bg-danger"
                 }`}
             ></div>

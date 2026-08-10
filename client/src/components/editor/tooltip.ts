@@ -41,14 +41,14 @@ export function getCursorTooltips(users: RemoteUser[]) {
 
 export const cursorTooltipBaseTheme = EditorView.baseTheme({
     ".cm-tooltip.cm-tooltip-cursor": {
-        backgroundColor: "#66b",
+        backgroundColor: "#20D9A6",
         color: "white",
         border: "none",
         padding: "2px 7px",
         borderRadius: "4px",
         zIndex: "10",
         "& .cm-tooltip-arrow:before": {
-            borderTopColor: "#66b",
+            borderTopColor: "#20D9A6",
         },
         "& .cm-tooltip-arrow:after": {
             borderTopColor: "transparent",
