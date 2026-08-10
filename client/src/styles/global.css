@@ -15,9 +15,11 @@ body {
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
+    background-color: #0B1018;
+    color: #FFFFFF;
 
-    --sb-track-color: #3d404a;
-    --sb-thumb-color: #e1e1ffb3;
+    --sb-track-color: #1A202C;
+    --sb-thumb-color: #20D9A6b3;
     --sb-size: 6px;
 }
 
