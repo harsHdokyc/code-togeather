@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="./client/src/assets/logo.png" alt="Code Together logo" width="480" />
+  <img src="./client/src/assets/logo.png" alt="Code Togeather logo" width="480" />
 </p>
 
-A collaborative, real-time code editor where users can seamlessly code together. It provides a platform for multiple users to enter a room, share a unique room ID, and collaborate on code simultaneously.
+A collaborative, real-time code editor where multiple users can join a room, share a room ID, and work on code together — with chat, video calls, collaborative drawing, code execution, and an AI Copilot.
 
 ![GitHub contributors](https://img.shields.io/github/contributors/harsHdokyc/code-togeather?style=for-the-badge&color=48bf21)
 ![GitHub Repo stars](https://img.shields.io/github/stars/harsHdokyc/code-togeather?style=for-the-badge)
@@ -14,168 +14,160 @@ A collaborative, real-time code editor where users can seamlessly code together.
 ## 🔮 Features
 
 - 💻 Real-time collaboration on code editing across multiple files
-- 📁 Create, open, edit, save, delete, and organize files and folders
-- 💾 Option to download the entire codebase as a zip file
-- 🚀 Unique room generation with room ID for collaboration
-- 🌍 Comprehensive language support for versatile programming
-- 🌈 Syntax highlighting for various file types with auto-language detection
-- 🚀 Code Execution: Users can execute the code directly within the collaboration environment
-- ⏱️ Instant updates and synchronization of code changes across all files and folders
-- 📣 Notifications for user join and leave events
-- 👥 User presence list with online/offline status indicators
-- 💬 Real-time group chatting functionality
-- 🎩 Real-time tooltip displaying users currently editing.
-- 🖊 Showing real-time selection of what each user has currently selected.
-- 💡 Auto-suggestion based on programming language
-- 🔠 Option to change font size and font family
-- 🎨 Multiple themes for personalized coding experience
-- 🎨 Collaborative Drawing: Enable users to draw and sketch collaboratively in real-time
-- 🤖 Copilot: An AI-powered assistant that generates code, allowing you to insert, copy, or replace content seamlessly within your files.
+- 📁 Create, open, rename, delete, and organize files and folders (including opening a local directory)
+- 💾 Download the entire workspace as a zip file
+- 🚀 Unique room generation with room ID / shareable link
+- 🌍 Language support with syntax highlighting and auto-language detection
+- 🚀 Code execution via SandboxAPI (stdin supported)
+- ⏱️ Instant file and folder sync across all connected users
+- 📣 Join / leave notifications
+- 👥 User presence list with online / offline indicators
+- 💬 Real-time group chat
+- 📹 In-room video calls (WebRTC: mute, camera toggle, accept / reject)
+- 🎩 Typing indicators and remote cursor / selection highlights
+- 🔠 Adjustable font size and font family
+- 🎨 Multiple editor themes
+- 🎨 Collaborative drawing canvas (tldraw) with real-time sync
+- 🤖 AI Copilot (OpenRouter) — generate code, then copy, insert, or replace file content
 
-<!-- ## 🚀 Live Preview
-
-You can view the live preview of the project [here](https://code-sync-live.vercel.app/). -->
+> **Note:** Room state is kept in memory on the server. Restarting the server clears rooms (clients hold the latest local copy until reconnect).
 
 ## 💻 Tech Stack
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![CodeMirror](https://img.shields.io/badge/CodeMirror-6-d4b35a?style=for-the-badge)
 ![NodeJS](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![ExpressJS](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
-![Socket io](https://img.shields.io/badge/Socket.io-ffffff?style=for-the-badge)
-![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
-![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
-![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![Socket io](https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=socketdotio&logoColor=white)
+![tldraw](https://img.shields.io/badge/tldraw-000000?style=for-the-badge)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+
+**External services:** [SandboxAPI](https://sandboxapi.dev/) (code run) · [OpenRouter](https://openrouter.ai/) (Copilot)
 
 ## ⚙️ Installation
 
 ### Method 1: Manual Installation
 
-1. **Fork this repository:** Click the Fork button located in the top-right corner of this page.
-2. **Clone the repository:**
+1. **Fork** this repository (top-right on GitHub), then **clone** your fork:
    ```bash
    git clone https://github.com/<your-username>/code-togeather.git
+   cd code-togeather
    ```
-3. **Create .env file:**
-   Inside the client and server directories create `.env` and set:
 
-   Frontend:
+2. **Configure environment files**
+
+   Copy the examples and edit values:
 
    ```bash
-   VITE_BACKEND_URL=<your_server_url>
+   cp client/.env.example client/.env
+   cp server/.env.example server/.env
+   ```
+
+   **Client** (`client/.env`):
+
+   ```bash
+   VITE_BACKEND_URL=http://localhost:3000
    VITE_SANDBOX_API_URL=https://sandboxapi.p.rapidapi.com/v1
    VITE_SANDBOX_API_KEY=<your_rapidapi_key>
    ```
 
-   Backend:
+   **Server** (`server/.env`):
 
    ```bash
    PORT=3000
+   COPILOT_API_KEY=<your_openrouter_api_key>
    ```
 
-4. **Install dependencies:**
+   - `VITE_BACKEND_URL` — Socket.IO + Copilot API base URL (use `http://localhost:3000` locally)
+   - `VITE_SANDBOX_API_KEY` — RapidAPI key for [SandboxAPI](https://rapidapi.com/sandboxapidev/api/sandboxapi) (needed for Run Code)
+   - `COPILOT_API_KEY` — [OpenRouter](https://openrouter.ai/) API key (needed for Copilot)
+
+3. **Install dependencies** (no root `package.json` — install in both apps):
+
    ```bash
-   npm install     # Run in both client and server directories
+   cd server && npm install
+   cd ../client && npm install
    ```
-5. **Start the servers:**
-   Frontend:
+
+4. **Start the apps** (two terminals):
+
    ```bash
+   # Terminal 1 — backend (http://localhost:3000)
+   cd server
+   npm run dev
+
+   # Terminal 2 — frontend (http://localhost:5173)
    cd client
    npm run dev
    ```
-   Backend:
+
+5. Open **http://localhost:5173/**
+
+### Method 2: Docker Compose
+
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and verify:
    ```bash
-   cd server
-   npm run dev
-   ```
-6. **Access the application:**
-   ```bash
-   http://localhost:5173/
-   ```
-
-### Method 2: Docker Installation
-
-1. **Install Docker Desktop:**
-
-   - Download and install **Docker Desktop** from [Docker’s official website](https://www.docker.com/products/docker-desktop/).
-   - Verify installation:
-     ```bash
-     docker --version
-     ```
-
-2. **Pull Docker Images:**
-
-   ```bash
-   # Pull Backend Image
-   docker pull harsHdokyc/code-togeather-server:latest
-
-   # Pull Frontend Image
-   docker pull harsHdokyc/code-togeather-client:latest
+   docker --version
    ```
 
-3. **Run Docker Containers:**
+2. From the repo root, set env files as in Method 1 (`client/.env`, `server/.env`), then:
 
    ```bash
-   # Run Backend Container (Port 3000)
-   docker run -d -p 3000:3000 --name code-togeather-server harsHdokyc/code-togeather-server:latest
-
-   # Run Frontend Container (Port 5173)
-   docker run -d -p 5173:5173 --name code-togeather-client harsHdokyc/code-togeather-client:latest
+   docker compose up --build
    ```
 
-4. **Access the application:**
-   ```bash
-   http://localhost:5173/
-   ```
+3. Open **http://localhost:5173/**  
+   Backend listens on **http://localhost:3000/**
+
+### Method 3: Prebuilt Docker images (optional)
+
+```bash
+docker pull harsHdokyc/code-togeather-server:latest
+docker pull harsHdokyc/code-togeather-client:latest
+
+docker run -d -p 3000:3000 --name code-togeather-server harsHdokyc/code-togeather-server:latest
+docker run -d -p 5173:5173 --name code-togeather-client harsHdokyc/code-togeather-client:latest
+```
+
+> Prefer **Method 2** for local development so your current source and env files are used.
+
+## 📁 Project structure
+
+```
+code-togeather/
+├── client/                 # React + Vite frontend
+│   ├── src/
+│   │   ├── components/     # Editor, files, chat, drawing, sidebar, video, …
+│   │   ├── context/        # Socket, File, Chat, Copilot, Run, VideoCall, …
+│   │   ├── pages/          # Home + Editor room
+│   │   └── api/            # SandboxAPI client
+│   └── .env.example
+├── server/                 # Express + Socket.IO backend
+│   ├── src/server.ts       # Rooms, sync, WebRTC signaling, /api/copilot
+│   └── .env.example
+└── docker-compose.yml
+```
 
 ## 🔮 Features for Next Release
 
-- **Admin Permission:** Implement an admin permission system to manage user access levels and control over certain platform features.
+- **Admin permissions:** room-level roles to control access and privileged actions
 
 ## 🌟 Appreciation for Resources
 
 Special thanks to:
 
-- SandboxAPI for providing code execution API:
+- **SandboxAPI** — code execution
+  - [Documentation](https://sandboxapi.dev/)
+  - [RapidAPI](https://rapidapi.com/sandboxapidev/api/sandboxapi)
 
-  - [SandboxAPI Documentation](https://sandboxapi.dev/)
-  - [RapidAPI SandboxAPI](https://rapidapi.com/sandboxapidev/api/sandboxapi)
+- **tldraw** — collaborative drawing
+  - [Repository](https://github.com/tldraw/tldraw)
+  - [Docs](https://tldraw.dev/)
 
-- Tldraw contributors:
-  - [Tldraw Repository](https://github.com/tldraw/tldraw)
-  - [Tldraw Documentation](https://tldraw.dev/)
-
-- Pollinations AI:
-  - [Pollinations Repository](https://github.com/pollinations/pollinations)
-  - [Pollinations Docs](https://pollinations.ai/)
-
-<!-- ## ✍️ About Developer
-
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top">
-        <img src="https://github.com/harsHdokyc.png" width="120px;" alt="harsHdokyc"/>
-        <br />
-        <b>harsHdokyc</b>
-      </td>
-    </tr>
-    <tr>
-        <td align="center">
-            <a href="https://github.com/harsHdokyc">
-            <img src="https://img.shields.io/badge/GitHub-100000.svg?style=for-the-badge&logo=github&logoColor=white"/>
-            </a>
-            <br/>
-            <a href="https://linkedin.com/in/harsHdokyc">
-            <img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white"/>
-            </a>
-        </td>
-    </tr>
-  </tbody>
-</table> -->
-
-
-
+- **OpenRouter** — Copilot LLM access
+  - [OpenRouter](https://openrouter.ai/)
+  - [Docs](https://openrouter.ai/docs)
